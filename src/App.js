@@ -3,6 +3,8 @@ import Header from "./header";
 import Loginpage from "./loginpage";
 import Product from "./product";
 import { Route, Routes } from "react-router-dom";
+import Service from "./service";
+import Bestselling from "./sellingproduct";
 function App() {
   return (
     <div className="App">
@@ -11,6 +13,8 @@ function App() {
         <Route path="Loginpage" element={<Loginpage />} />
       </Routes>
       <Header />
+      <Service/>
+      <Bestselling/>
       <Product />
       <Footer />
     </div>
