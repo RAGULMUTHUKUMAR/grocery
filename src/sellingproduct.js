@@ -4,85 +4,74 @@ import product2 from "./images/1.png";
 import product3 from "./images/29.png";
 import product4 from "./images/35.png";
 import { IoMdStar, IoMdStarHalf } from "react-icons/io";
-import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { MdLocalOffer } from "react-icons/md";
 
 function Bestselling() {
+  const bestSellingItems = [
+    {
+      id: 1,
+      image: product1,
+      title: "Fresh Strawberry",
+      price: "$17.00"
+    },
+    {
+      id: 2,
+      image: product2,
+      title: "Fortune Sunflower Oil",
+      price: "$10.00"
+    },
+    {
+      id: 3,
+      image: product3,
+      title: "Fresh Bananas",
+      price: "$10.00"
+    },
+    {
+      id: 4,
+      image: product4,
+      title: "Fresh Mushroom",
+      price: "$11.00"
+    }
+  ];
+
   return (
-    <div>
-        <h1 className="font-bold text-4xl text-red-400 text-center mt-[100px] ">Best Selling Products</h1>
-      <div className="flex justify-around items-center w-full h-[700px]">
-        <div className="flex flex-col justify-center items-center gap-3 shadow-2xl shadow-slate-500 w-[300px] h-[400px]">
-          <img src={product1} alt="image1" />
-          <h1 className="text-green-300">Fresh Strawberry</h1>
-          <p className="flex text-red-400">
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStarHalf />
-          </p>
-          <p>$17.00</p>
-          <button className="text-xs hover:bg-sky-700 w-[150px] bg-red-400 text-green-300 p-[15px] rounded-[10px]">
-            Order Now
-          </button>
-        </div>
-        <div className="flex flex-col justify-center items-center gap-3 shadow-2xl shadow-slate-500 w-[300px] h-[400px]">
-          <img src={product2} alt="image2" />
-          <h1 className="text-green-300">Fortune Sunflower Oil</h1>
-          <p className="flex text-red-400">
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStarHalf />
-          </p>
-          <p>$10.00</p>
-          <button className="text-xs hover:bg-sky-700 w-[150px] bg-red-400 text-green-300 p-[15px] rounded-[10px]">
-            Order Now
-          </button>
-        </div>
-        <div className="flex flex-col justify-center items-center gap-3 shadow-2xl shadow-slate-500 w-[300px] h-[400px]">
-          <img src={product3} alt="image3" />
-          <h1 className="text-green-300">Fortune Sunflower Oil</h1>
-          <p className="flex text-red-400">
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStarHalf />
-          </p>
-          <p>$10.00</p>
-          <button className="text-xs hover:bg-sky-700 w-[150px] bg-red-400 text-green-300 p-[15px] rounded-[10px]">
-            Order Now
-          </button>
-        </div>
-        <div className="flex flex-col justify-center items-center gap-3 shadow-2xl shadow-slate-500 w-[300px] h-[400px]">
-          <img src={product4} alt="image4" />
-          <h1 className="text-green-300">Fresh Mushroom</h1>
-          <p className="flex text-red-400">
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStar />
-            <IoMdStarHalf />
-          </p>
-          <p>$11.00</p>
-          <button className="text-xs hover:bg-sky-700 w-[150px] bg-red-400 text-green-300 p-[15px] rounded-[10px]">
-            Order Now
-          </button>
-        </div>
+    <section className="section shell best-section">
+      <div className="section-head">
+        <p className="eyebrow">Top Picks</p>
+        <h2>Best Selling Essentials</h2>
       </div>
-      <div className="flex bg-red-100 w-full h-[250px] gap-[150px] justify-center items-center ">
-        <h1 className="font-bold text-5xl">Get 25% Off On Your First Purchase...!</h1>
-        <button className="text-xl p-4 w-[200px] hover:bg-sky-700 bg-red-400 text-green-300 flex justify-around items-center gap-2 rounded-[10px]">
-            <MdOutlineShoppingCartCheckout />
-            Add to cart
-          </button>
+      <div className="best-grid">
+        {bestSellingItems.map((item) => (
+          <article className="product-tile" key={item.id}>
+            <img src={item.image} alt={item.title} />
+            <h3>{item.title}</h3>
+            <p className="rating">
+              <IoMdStar />
+              <IoMdStar />
+              <IoMdStar />
+              <IoMdStar />
+              <IoMdStarHalf />
+            </p>
+            <p className="price">{item.price}</p>
+            <button className="btn btn-solid" type="button">
+              Order Now
+            </button>
+          </article>
+        ))}
       </div>
-      <div>
-        <h1 className="text-center bg-green-100 h-[70px] flex justify-center items-center">Try It For Free. No Registration Needed.</h1>
+
+      <div className="deal-banner">
+        <div>
+          <p className="eyebrow">Limited Time</p>
+          <h3>Get 25% Off On Your First Purchase</h3>
+          <p>Use code FRESH25 at checkout and enjoy instant savings.</p>
+        </div>
+        <button className="btn btn-outline" type="button">
+          <MdLocalOffer />
+          Claim Offer
+        </button>
       </div>
-    </div>
+    </section>
   );
 }
 

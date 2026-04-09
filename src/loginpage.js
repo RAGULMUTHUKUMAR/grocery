@@ -3,34 +3,40 @@ import { Link } from "react-router-dom";
 
 function Loginpage() {
   return (
-    <div className="flex justify-center items-center w-full h-[100vh]">
-      <div className="flex flex-col justify-center items-center w-[500px] h-[500px] gap-[20px] shadow-black shadow-2xl ">
-        <h1 className="text-red-400 text-4xl  font-bold">EaSy2FaSt</h1>
-        <div className="flex flex-col">
-          <h1 className="text-green-300 text-3xl pt-5  font-bold">LOG IN</h1>
-          <p className="text-xs text-gray-600">Enter your Email and password to login our Shopping</p>
+    <main className="login-shell">
+      <section className="login-card">
+        <div className="login-copy">
+          <p className="eyebrow">Welcome Back</p>
+          <h1>Sign In To Continue Shopping</h1>
+          <p>
+            Access your saved cart, favorite products, and express checkout.
+          </p>
         </div>
-        <div>
-          <h1>Email</h1>
-          <input className="p-1 border-solid border-2 border-green-300" placeholder="Enter Your Email"></input>
-        </div>
-        <div>
-          <h1>Password</h1>
-          <input className="p-1 border-solid border-2 border-green-300 " placeholder="Enter Your Password"></input>
-          <p className="text-xs">Forget password?</p>
-        </div>
-        <Link to="Header">
-        <button className="text-xs hover:bg-sky-700 bg-red-400 text-green-300 w-[150px] rounded-[8px] p-2">
-          Sign in
-        </button>
-        </Link>
-        
-        <div className="text-xs">
-          <p>Don't have an account? <a href=" ">Sign up</a> </p>
-          
-        </div>
-      </div>
-    </div>
+
+        <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+          <label htmlFor="email">Email</label>
+          <input id="email" type="email" placeholder="name@example.com" required />
+
+          <label htmlFor="password">Password</label>
+          <input id="password" type="password" placeholder="Enter your password" required />
+
+          <div className="login-row">
+            <label>
+              <input type="checkbox" /> Remember me
+            </label>
+            <a href="#home">Forgot password?</a>
+          </div>
+
+          <button className="btn btn-solid" type="submit">
+            Sign In
+          </button>
+        </form>
+
+        <p className="login-back">
+          <Link to="/">Back to Home</Link>
+        </p>
+      </section>
+    </main>
   );
 }
 

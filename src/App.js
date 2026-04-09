@@ -5,18 +5,28 @@ import Product from "./product";
 import { Route, Routes } from "react-router-dom";
 import Service from "./service";
 import Bestselling from "./sellingproduct";
+
+function HomePage() {
+  return (
+    <div className="app-shell">
+      <Header />
+      <main>
+        <Service />
+        <Bestselling />
+        <Product />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="Header" element={<Header />} />
-        <Route path="Loginpage" element={<Loginpage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Loginpage />} />
       </Routes>
-      <Header />
-      <Service/>
-      <Bestselling/>
-      <Product />
-      <Footer />
     </div>
   );
 }

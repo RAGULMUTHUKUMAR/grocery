@@ -1,11 +1,16 @@
 import { useState } from "react";
 import Data from "./data";
+import { IoMdStar } from "react-icons/io";
 
 function Product() {
   const [product, setProduct] = useState(Data);
-  const [count,setCount] = useState(0)
+  const [counts, setCounts] = useState(
+    Data.reduce((acc, item) => ({ ...acc, [item.id]: 0 }), {})
+  );
+  const [selectedCategory, setSelectedCategory] = useState("ALL GROCERYS");
 
   function handleChange(category) {
+    setSelectedCategory(category);
     if (category === "ALL GROCERYS") {
       setProduct(Data);
     } else {
@@ -14,16 +19,13 @@ function Product() {
     }
   }
 
-  const handleDecrement =()=>{
-    if(count>1){
-      setCount(starting => starting -1)
-    }
-  }
-  const handleIncrement =()=>{
-    if(count<10){
-      setCount(starting => starting +1)
-    }
-  }
+  const handleDecrement = (id) => {
+    setCounts((prev) => ({ ...prev, [id]: Math.max(prev[id] - 1, 0) }));
+  };
+
+  const handleIncrement = (id) => {
+    setCounts((prev) => ({ ...prev, [id]: Math.min(prev[id] + 1, 10) }));
+  };
 
   const filteredCategories = [
     "ALL GROCERYS",
@@ -33,49 +35,62 @@ function Product() {
   ];
 
   return (
-    <div>
-      <h1 className="font-bold text-4xl text-red-400 text-center p-5 mt-5 ">
-        SHOPPING NOW
-      </h1>
-      <p className="text-green-300 text-center">Ready To Go...!</p>
-      <div>
-        <div className="flex justify-around items-center mt-10 p-10">
+    <section className="section shell" id="products">
+      <div className="section-head">
+        <p className="eyebrow">Catalog</p>
+        <h2>Pick Your Daily Grocery Favorites</h2>
+      </div>
+
+      <div className="category-row">
+        <div className="chip-group">
           {filteredCategories.map((category) => (
             <button
-              className="hover:bg-green-300 font-bold text-red-400 shadow-black shadow-2xl p-3 cursor-pointer"
+              className={`chip ${
+                selectedCategory === category ? "chip-active" : ""
+              }`}
               onClick={() => handleChange(category)}
               key={category}
+              type="button"
             >
               {category}
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-4 place-items-center place-content-center gap-[50px] mt-10">
-          {product.map((item) => (
-            <div
-              className="shadow-black shadow-2xl w-[300px] h-[350px] rounded-2xl flex flex-col justify-center gap-3  items-center"
-              key={item.id}
-            >
-              <img
-                className="w-[150px] h-[150px]"
-                src={item.Image}
-                alt="images"
-              />
-              <h1 className="font-medium">{item.fname}</h1>
-              <p>{item.price}</p>
-              <div className="flex bg-green-300 text-red-400 p-1 rounded-lg gap-5">
-                <button className="w-[20px] h-[20px] flex justify-center items-center rounded-sm" type="submit" onClick={handleDecrement}>-</button>
-                <div>{count}</div>
-                <button className="w-[20px] h-[20px] flex justify-center items-center rounded-sm" type="submit" onClick={handleIncrement}>+</button>
-                </div>
-              <button className="hover:bg-sky-700 bg-red-400 text-green-300 w-[130px] h-[40px] text-center rounded-lg">
-                Add to cart
-              </button>
-            </div>
-          ))}
-        </div>
+
+        <p className="result-count">{product.length} items available</p>
       </div>
-    </div>
+
+      <div className="catalog-grid">
+          {product.map((item) => (
+            <article className="catalog-card" key={item.id}>
+              <img className="catalog-image" src={item.Image} alt={item.fname} />
+              <div className="catalog-body">
+                <h3>{item.fname}</h3>
+                <p className="rating mini-rating">
+                  <IoMdStar />
+                  <IoMdStar />
+                  <IoMdStar />
+                  <IoMdStar />
+                  <IoMdStar />
+                </p>
+                <p className="price">{item.price}</p>
+                <div className="qty-control">
+                  <button type="button" onClick={() => handleDecrement(item.id)}>
+                    -
+                  </button>
+                  <span>{counts[item.id]}</span>
+                  <button type="button" onClick={() => handleIncrement(item.id)}>
+                    +
+                  </button>
+                </div>
+                <button className="btn btn-solid card-btn" type="button">
+                  Add to cart
+                </button>
+              </div>
+            </article>
+          ))}
+      </div>
+    </section>
   );
 }
 
