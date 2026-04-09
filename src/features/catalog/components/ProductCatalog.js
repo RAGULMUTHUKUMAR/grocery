@@ -7,14 +7,18 @@ import {
 import ProductCard from "../../../shared/components/ProductCard";
 import EmptyState from "../../../shared/components/EmptyState";
 import SectionHeading from "../../../shared/components/SectionHeading";
+import useAppState from "../../../shared/hooks/useAppState";
 import { listProducts } from "../services/productService";
 import { createQuantityMap, filterProductsByCategory } from "../utils/catalog";
 
 function ProductCatalog() {
+  const { dispatch } = useAppState();
   const [products, setProducts] = useState([]);
   const [counts, setCounts] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(CATEGORY_ALL);
   const [status, setStatus] = useState("loading");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("featured");
 
   useEffect(() => {
     let active = true;
@@ -44,10 +48,26 @@ function ProductCatalog() {
     };
   }, []);
 
-  const filteredProducts = useMemo(
-    () => filterProductsByCategory(products, selectedCategory),
-    [products, selectedCategory]
-  );
+  const filteredProducts = useMemo(() => {
+    const byCategory = filterProductsByCategory(products, selectedCategory);
+    const bySearch = byCategory.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+    );
+
+    const sortedProducts = [...bySearch];
+
+    if (sortOrder === "price-low") {
+      sortedProducts.sort((left, right) => left.price - right.price);
+    } else if (sortOrder === "price-high") {
+      sortedProducts.sort((left, right) => right.price - left.price);
+    } else if (sortOrder === "rating") {
+      sortedProducts.sort((left, right) => right.rating - left.rating);
+    } else {
+      sortedProducts.sort((left, right) => Number(right.featured) - Number(left.featured));
+    }
+
+    return sortedProducts;
+  }, [products, searchTerm, selectedCategory, sortOrder]);
 
   const handleDecrement = (id) => {
     setCounts((prev) => ({ ...prev, [id]: Math.max((prev[id] ?? 0) - 1, 0) }));
@@ -58,6 +78,14 @@ function ProductCatalog() {
       ...prev,
       [id]: Math.min((prev[id] ?? 0) + 1, MAX_CART_QUANTITY),
     }));
+  };
+
+  const handleAddToCart = (product) => {
+    const selectedQuantity = counts[product.id] ?? 0;
+    const quantityToAdd = selectedQuantity > 0 ? selectedQuantity : 1;
+
+    dispatch({ type: "ADD_TO_CART", product, quantity: quantityToAdd });
+    setCounts((prev) => ({ ...prev, [product.id]: 0 }));
   };
 
   return (
@@ -87,6 +115,26 @@ function ProductCatalog() {
         <p className="result-count">{filteredProducts.length} items available</p>
       </div>
 
+      <div className="catalog-toolbar">
+        <input
+          className="catalog-search"
+          type="search"
+          placeholder="Search groceries"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+        <select
+          className="catalog-sort"
+          value={sortOrder}
+          onChange={(event) => setSortOrder(event.target.value)}
+        >
+          <option value="featured">Featured first</option>
+          <option value="price-low">Price: low to high</option>
+          <option value="price-high">Price: high to low</option>
+          <option value="rating">Top rated</option>
+        </select>
+      </div>
+
       {status === "loading" ? <p className="status-copy">Loading products...</p> : null}
       {status === "error" ? (
         <EmptyState
@@ -110,6 +158,7 @@ function ProductCatalog() {
               quantity={counts[product.id] ?? 0}
               onDecrement={() => handleDecrement(product.id)}
               onIncrement={() => handleIncrement(product.id)}
+              onAction={() => handleAddToCart(product)}
             />
           ))}
         </div>

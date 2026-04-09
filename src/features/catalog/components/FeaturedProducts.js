@@ -3,9 +3,11 @@ import { MdLocalOffer } from "react-icons/md";
 import EmptyState from "../../../shared/components/EmptyState";
 import ProductCard from "../../../shared/components/ProductCard";
 import SectionHeading from "../../../shared/components/SectionHeading";
+import useAppState from "../../../shared/hooks/useAppState";
 import { listFeaturedProducts } from "../services/productService";
 
 function FeaturedProducts() {
+  const { dispatch, state } = useAppState();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -46,6 +48,7 @@ function FeaturedProducts() {
               product={product}
               compact
               actionLabel="Order Now"
+              onAction={() => dispatch({ type: "ADD_TO_CART", product, quantity: 1 })}
             />
           ))}
         </div>
@@ -57,9 +60,13 @@ function FeaturedProducts() {
           <h3>Get 25% Off On Your First Purchase</h3>
           <p>Use code FRESH25 at checkout and enjoy instant savings.</p>
         </div>
-        <button className="btn btn-outline" type="button">
+        <button
+          className="btn btn-outline"
+          type="button"
+          onClick={() => dispatch({ type: "CLAIM_OFFER", code: "FRESH25" })}
+        >
           <MdLocalOffer />
-          Claim Offer
+          {state.claimedOfferCode ? "Offer Added" : "Claim Offer"}
         </button>
       </div>
     </section>

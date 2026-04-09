@@ -21,6 +21,7 @@ function ProductCard({
   quantity,
   onDecrement,
   onIncrement,
+  onAction,
   actionLabel = "Add to cart",
   compact = false
 }) {
@@ -42,7 +43,7 @@ function ProductCard({
             onIncrement={onIncrement}
           />
         ) : null}
-        <button className="btn btn-solid card-btn" type="button">
+        <button className="btn btn-solid card-btn" type="button" onClick={onAction}>
           {actionLabel}
         </button>
       </div>

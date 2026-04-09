@@ -2,8 +2,15 @@ import logo from "../../../assets/images/logo.png";
 import { MdAccountCircle, MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { IoLeafOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import useAppState from "../../../shared/hooks/useAppState";
 
 function Header() {
+  const { state, dispatch } = useAppState();
+  const totalItems = Object.values(state.cart).reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
   return (
     <div className="hero-wrap" id="home">
       <nav className="site-nav">
@@ -26,13 +33,29 @@ function Header() {
           </li>
         </ul>
         <div className="nav-actions">
-          <button className="btn btn-outline" type="button">
+          <button
+            className="btn btn-outline cart-trigger"
+            type="button"
+            onClick={() => dispatch({ type: "TOGGLE_CART", value: true })}
+          >
             <MdOutlineShoppingCartCheckout />
             Cart
+            <span className="cart-badge">{totalItems}</span>
           </button>
-          <Link to="/login" className="account-link" aria-label="Login page">
-            <MdAccountCircle />
-          </Link>
+          {state.user ? (
+            <button
+              type="button"
+              className="account-pill"
+              onClick={() => dispatch({ type: "LOGOUT" })}
+            >
+              <MdAccountCircle />
+              {state.user.name}
+            </button>
+          ) : (
+            <Link to="/login" className="account-link" aria-label="Login page">
+              <MdAccountCircle />
+            </Link>
+          )}
         </div>
       </nav>
 

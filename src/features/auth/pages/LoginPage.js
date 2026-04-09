@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import useAppState from "../../../shared/hooks/useAppState";
 
 function validateLogin(values) {
   const errors = {};
@@ -20,6 +22,8 @@ function validateLogin(values) {
 }
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const { dispatch } = useAppState();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -43,6 +47,17 @@ function LoginPage() {
     if (Object.keys(errors).length > 0) {
       return;
     }
+
+    dispatch({
+      type: "LOGIN",
+      user: {
+        name: values.email.split("@")[0],
+        email: values.email,
+        remember: values.remember
+      }
+    });
+
+    navigate("/");
   }
 
   return (
@@ -98,9 +113,7 @@ function LoginPage() {
             Sign In
           </button>
           {submitted && Object.keys(errors).length === 0 ? (
-            <p className="form-success">
-              Validation passed. Backend authentication will connect in the next implementation phase.
-            </p>
+            <p className="form-success">Signing you in and restoring your shopping session.</p>
           ) : null}
         </form>
 

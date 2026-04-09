@@ -1,11 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import AppStateProvider from "../../../app/providers/AppStateProvider";
 import LoginPage from "./LoginPage";
 
 test("shows validation errors for invalid login submission", async () => {
   render(
     <MemoryRouter>
-      <LoginPage />
+      <AppStateProvider>
+        <LoginPage />
+      </AppStateProvider>
     </MemoryRouter>
   );
 

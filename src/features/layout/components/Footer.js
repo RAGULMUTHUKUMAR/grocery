@@ -2,20 +2,44 @@ import { RiInstagramLine } from "react-icons/ri";
 import { IoLogoWhatsapp } from "react-icons/io5";
 import { TiSocialGooglePlus } from "react-icons/ti";
 import { FaFacebookSquare } from "react-icons/fa";
+import { useState } from "react";
+import useAppState from "../../../shared/hooks/useAppState";
 
 function Footer() {
+  const { state, dispatch } = useAppState();
+  const [email, setEmail] = useState(state.subscribedEmail || "");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      return;
+    }
+
+    dispatch({ type: "SUBSCRIBE", email });
+  }
+
   return (
     <footer className="site-footer" id="contact">
       <section className="shell newsletter">
         <div>
           <p className="eyebrow">Stay Updated</p>
           <h2>Join Our Weekly Grocery Deals</h2>
-          <p>Get fresh offers, seasonal picks, and healthy recipe ideas.</p>
+          <p>
+            Get fresh offers, seasonal picks, and healthy recipe ideas.
+            {state.subscribedEmail ? ` Subscribed as ${state.subscribedEmail}.` : ""}
+          </p>
         </div>
-        <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-          <input type="email" placeholder="Enter your email" required />
+        <form className="newsletter-form" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
           <button className="btn btn-solid" type="submit">
-            Subscribe
+            {state.subscribedEmail ? "Update email" : "Subscribe"}
           </button>
         </form>
       </section>

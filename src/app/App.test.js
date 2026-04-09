@@ -1,11 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import AppStateProvider from "./providers/AppStateProvider";
 import App from "./App";
 
 test("renders the redesigned homepage", async () => {
   render(
     <MemoryRouter initialEntries={["/"]}>
-      <App />
+      <AppStateProvider>
+        <App />
+      </AppStateProvider>
     </MemoryRouter>
   );
 
