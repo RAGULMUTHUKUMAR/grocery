@@ -1,4 +1,3 @@
-import React from "react";
 import { RiInstagramLine } from "react-icons/ri";
 import { IoLogoWhatsapp } from "react-icons/io5";
 import { TiSocialGooglePlus } from "react-icons/ti";

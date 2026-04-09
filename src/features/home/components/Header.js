@@ -1,7 +1,5 @@
-import React from "react";
-import logo from "./images/logo.png";
-import { MdAccountCircle } from "react-icons/md";
-import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import logo from "../../../assets/images/logo.png";
+import { MdAccountCircle, MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { IoLeafOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 

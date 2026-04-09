@@ -118,7 +118,7 @@ a {
 .hero-wrap {
     background:
         linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(238, 238, 238, 0.94)),
-        url("./assets/images/1.jpg") right center / 44% no-repeat;
+        url("../../assets/images/1.jpg") right center / 44% no-repeat;
     border-bottom-left-radius: 32px;
     border-bottom-right-radius: 32px;
     padding-bottom: 42px;
@@ -853,7 +853,7 @@ a {
     .hero-wrap {
         background:
             linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(238, 238, 238, 0.95)),
-            url("./assets/images/1.jpg") 120% 120px / 320px no-repeat;
+            url("../../assets/images/1.jpg") 120% 120px / 320px no-repeat;
     }
 
     .hero-area {
