@@ -14,87 +14,87 @@ import averagecast2 from "./images/34.png"
 const Data = [
   {
     id: 1,
-    fname:"Fresh Mushroom",
+    fname: "Fresh Mushroom",
     category: "LOW CAST GROCERYS",
     Image: lowcast1,
-    price:"$11.00"
+    price: "$11.00"
   },
   {
     id: 2,
-    fname:"Fresh Basket Onion",
+    fname: "Fresh Basket Onion",
     category: "LOW CAST GROCERYS",
     Image: lowcast2,
-    price:"$5.00 "
+    price: "$5.00 "
   },
   {
     id: 3,
-    fname:"Fresh Broccoli",
+    fname: "Fresh Broccoli",
     category: "LOW CAST GROCERYS",
     Image: lowcast3,
-    price:"$4.00  "
+    price: "$4.00  "
   },
   {
     id: 4,
-    fname:"Fresh Brinjal Bharta",
+    fname: "Fresh Brinjal Bharta",
     category: "LOW CAST GROCERYS",
     Image: lowcast4,
-    price:"$2.00"
+    price: "$2.00"
   },
   {
     id: 5,
-    fname:"Fresh Bananas",
+    fname: "Fresh Bananas",
     category: "LOW CAST GROCERYS",
     Image: lowcast5,
-    price:"$10.00"
+    price: "$10.00"
   },
   {
     id: 6,
-    fname:"Fresh Apple Red",
+    fname: "Fresh Apple Red",
     category: "HIGH CAST GROCERYS",
     Image: highcast1,
-    price:"$20.00"
+    price: "$20.00"
   },
   {
     id: 7,
-    fname:"Fresh Strawberry ",
+    fname: "Fresh Strawberry ",
     category: "HIGH CAST GROCERYS",
     Image: highcast2,
-    price:"$17.00"
+    price: "$17.00"
   },
   {
     id: 8,
-    fname:"Knorr Instant Soup ",
+    fname: "Knorr Instant Soup ",
     category: "HIGH CAST GROCERYS",
     Image: highcast3,
-    price:"$3.00 "
+    price: "$3.00 "
   },
   {
     id: 9,
-    fname:"Fresh Mango Dasheri ",
+    fname: "Fresh Mango Dasheri ",
     category: "HIGH CAST GROCERYS",
     Image: highcast4,
-    price:"$13.00 "
+    price: "$13.00 "
   },
   {
     id: 10,
-    fname:"Fortune Sunflower Oil ",
+    fname: "Fortune Sunflower Oil ",
     category: "HIGH CAST GROCERYS",
     Image: highcast5,
-    price:"$10.00 "
+    price: "$10.00 "
   },
   {
     id: 11,
-    fname:"Basmati Rise ",
+    fname: "Basmati Rise ",
     category: "AVERAGE CAST GROCERYS",
     Image: averagecast1,
-    price:"$10.00 "
+    price: "$10.00 "
   },
   {
     id: 12,
-    fname:"Fresh Muskmelon  ",
+    fname: "Fresh Muskmelon  ",
     category: "AVERAGE CAST GROCERYS",
     Image: averagecast2,
-    price:"$9.00 "
+    price: "$9.00 "
   },
 
 ];

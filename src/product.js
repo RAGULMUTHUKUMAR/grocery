@@ -45,9 +45,8 @@ function Product() {
         <div className="chip-group">
           {filteredCategories.map((category) => (
             <button
-              className={`chip ${
-                selectedCategory === category ? "chip-active" : ""
-              }`}
+              className={`chip ${selectedCategory === category ? "chip-active" : ""
+                }`}
               onClick={() => handleChange(category)}
               key={category}
               type="button"
@@ -61,34 +60,34 @@ function Product() {
       </div>
 
       <div className="catalog-grid">
-          {product.map((item) => (
-            <article className="catalog-card" key={item.id}>
-              <img className="catalog-image" src={item.Image} alt={item.fname} />
-              <div className="catalog-body">
-                <h3>{item.fname}</h3>
-                <p className="rating mini-rating">
-                  <IoMdStar />
-                  <IoMdStar />
-                  <IoMdStar />
-                  <IoMdStar />
-                  <IoMdStar />
-                </p>
-                <p className="price">{item.price}</p>
-                <div className="qty-control">
-                  <button type="button" onClick={() => handleDecrement(item.id)}>
-                    -
-                  </button>
-                  <span>{counts[item.id]}</span>
-                  <button type="button" onClick={() => handleIncrement(item.id)}>
-                    +
-                  </button>
-                </div>
-                <button className="btn btn-solid card-btn" type="button">
-                  Add to cart
+        {product.map((item) => (
+          <article className="catalog-card" key={item.id}>
+            <img className="catalog-image" src={item.Image} alt={item.fname} />
+            <div className="catalog-body">
+              <h3>{item.fname}</h3>
+              <p className="rating mini-rating">
+                <IoMdStar />
+                <IoMdStar />
+                <IoMdStar />
+                <IoMdStar />
+                <IoMdStar />
+              </p>
+              <p className="price">{item.price}</p>
+              <div className="qty-control">
+                <button type="button" onClick={() => handleDecrement(item.id)}>
+                  -
+                </button>
+                <span>{counts[item.id]}</span>
+                <button type="button" onClick={() => handleIncrement(item.id)}>
+                  +
                 </button>
               </div>
-            </article>
-          ))}
+              <button className="btn btn-solid card-btn" type="button">
+                Add to cart
+              </button>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

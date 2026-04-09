@@ -667,6 +667,7 @@ a {
 }
 
 @media (max-width: 1100px) {
+
     .best-grid,
     .catalog-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
