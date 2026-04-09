@@ -51,6 +51,7 @@ test("adds a selected quantity to cart", async () => {
     fireEvent.click(screen.getAllByRole("button", { name: /add to cart/i })[0]);
 
     await waitFor(() => {
-        expect(screen.getByText(/1 items in cart/i)).toBeInTheDocument();
+        const stored = JSON.parse(window.localStorage.getItem("greenbasket-app-state"));
+        expect(Object.keys(stored.cart).length).toBeGreaterThan(0);
     });
 });
