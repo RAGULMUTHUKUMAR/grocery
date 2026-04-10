@@ -20,6 +20,9 @@ function ProductCatalog() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("featured");
 
+  const hasActiveFilters =
+    selectedCategory !== CATEGORY_ALL || searchTerm.trim().length > 0 || sortOrder !== "featured";
+
   useEffect(() => {
     let active = true;
 
@@ -88,6 +91,12 @@ function ProductCatalog() {
     setCounts((prev) => ({ ...prev, [product.id]: 0 }));
   };
 
+  const clearFilters = () => {
+    setSelectedCategory(CATEGORY_ALL);
+    setSearchTerm("");
+    setSortOrder("featured");
+  };
+
   return (
     <section className="section shell" id="products">
       <SectionHeading
@@ -116,26 +125,48 @@ function ProductCatalog() {
       </div>
 
       <div className="catalog-toolbar">
-        <input
-          className="catalog-search"
-          type="search"
-          placeholder="Search groceries"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
-        <select
-          className="catalog-sort"
-          value={sortOrder}
-          onChange={(event) => setSortOrder(event.target.value)}
+        <div className="catalog-input-wrap">
+          <label className="catalog-label" htmlFor="catalog-search">
+            Search products
+          </label>
+          <input
+            className="catalog-search"
+            id="catalog-search"
+            type="search"
+            placeholder="Search groceries"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </div>
+        <div className="catalog-input-wrap">
+          <label className="catalog-label" htmlFor="catalog-sort">
+            Sort by
+          </label>
+          <select
+            className="catalog-sort"
+            id="catalog-sort"
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+          >
+            <option value="featured">Featured first</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </div>
+        <button
+          className="btn btn-outline btn-reset"
+          type="button"
+          onClick={clearFilters}
+          disabled={!hasActiveFilters}
         >
-          <option value="featured">Featured first</option>
-          <option value="price-low">Price: low to high</option>
-          <option value="price-high">Price: high to low</option>
-          <option value="rating">Top rated</option>
-        </select>
+          Clear filters
+        </button>
       </div>
 
-      {status === "loading" ? <p className="status-copy">Loading products...</p> : null}
+      <p className="status-copy" role="status" aria-live="polite">
+        {status === "loading" ? "Loading products..." : `${filteredProducts.length} products shown`}
+      </p>
       {status === "error" ? (
         <EmptyState
           title="Catalog unavailable"
@@ -145,7 +176,11 @@ function ProductCatalog() {
       {status === "ready" && filteredProducts.length === 0 ? (
         <EmptyState
           title="No products found"
-          description="Try another category to discover available grocery items."
+          description={
+            searchTerm.trim()
+              ? `No results for "${searchTerm.trim()}". Try another keyword or clear filters.`
+              : "Try another category to discover available grocery items."
+          }
         />
       ) : null}
 

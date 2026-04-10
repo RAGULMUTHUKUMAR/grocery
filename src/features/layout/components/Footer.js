@@ -8,14 +8,17 @@ import useAppState from "../../../shared/hooks/useAppState";
 function Footer() {
   const { state, dispatch } = useAppState();
   const [email, setEmail] = useState(state.subscribedEmail || "");
+  const [error, setError] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
 
     if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
 
+    setError("");
     dispatch({ type: "SUBSCRIBE", email });
   }
 
@@ -30,18 +33,32 @@ function Footer() {
             {state.subscribedEmail ? ` Subscribed as ${state.subscribedEmail}.` : ""}
           </p>
         </div>
-        <form className="newsletter-form" onSubmit={handleSubmit}>
+        <form className="newsletter-form" onSubmit={handleSubmit} noValidate>
           <input
             type="email"
             placeholder="Enter your email"
-            required
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? "newsletter-error" : "newsletter-success"}
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              if (error) {
+                setError("");
+              }
+            }}
           />
           <button className="btn btn-solid" type="submit">
             {state.subscribedEmail ? "Update email" : "Subscribe"}
           </button>
         </form>
+        <p className="newsletter-feedback" id="newsletter-error" role="alert">
+          {error}
+        </p>
+        <p className="newsletter-feedback" id="newsletter-success" role="status" aria-live="polite">
+          {!error && state.subscribedEmail
+            ? `Subscribed successfully as ${state.subscribedEmail}.`
+            : ""}
+        </p>
       </section>
 
       <section className="shell footer-grid">

@@ -29,6 +29,10 @@ function LoginPage() {
     password: "",
     remember: false,
   });
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+  });
   const [submitted, setSubmitted] = useState(false);
   const errors = useMemo(() => validateLogin(values), [values]);
 
@@ -40,11 +44,20 @@ function LoginPage() {
     }));
   }
 
+  function handleBlur(event) {
+    const { name } = event.target;
+    setTouched((previous) => ({
+      ...previous,
+      [name]: true,
+    }));
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     setSubmitted(true);
 
     if (Object.keys(errors).length > 0) {
+      setTouched({ email: true, password: true });
       return;
     }
 
@@ -80,9 +93,15 @@ function LoginPage() {
             placeholder="name@example.com"
             value={values.email}
             onChange={handleChange}
-            aria-invalid={Boolean(errors.email)}
+            onBlur={handleBlur}
+            aria-invalid={Boolean((submitted || touched.email) && errors.email)}
+            aria-describedby={errors.email ? "email-error" : undefined}
           />
-          {errors.email ? <p className="form-error">{errors.email}</p> : null}
+          {(submitted || touched.email) && errors.email ? (
+            <p className="form-error" id="email-error" role="alert">
+              {errors.email}
+            </p>
+          ) : null}
 
           <label htmlFor="password">Password</label>
           <input
@@ -92,9 +111,15 @@ function LoginPage() {
             placeholder="Enter your password"
             value={values.password}
             onChange={handleChange}
-            aria-invalid={Boolean(errors.password)}
+            onBlur={handleBlur}
+            aria-invalid={Boolean((submitted || touched.password) && errors.password)}
+            aria-describedby={errors.password ? "password-error" : undefined}
           />
-          {errors.password ? <p className="form-error">{errors.password}</p> : null}
+          {(submitted || touched.password) && errors.password ? (
+            <p className="form-error" id="password-error" role="alert">
+              {errors.password}
+            </p>
+          ) : null}
 
           <div className="login-row">
             <label>
@@ -113,7 +138,9 @@ function LoginPage() {
             Sign In
           </button>
           {submitted && Object.keys(errors).length === 0 ? (
-            <p className="form-success">Signing you in and restoring your shopping session.</p>
+            <p className="form-success" role="status" aria-live="polite">
+              Signing you in and restoring your shopping session.
+            </p>
           ) : null}
         </form>
 

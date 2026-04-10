@@ -1,4 +1,7 @@
 import logo from "../../../assets/images/logo.png";
+import heroMain from "../../../assets/images/1.png";
+import heroFresh from "../../../assets/images/35.png";
+import heroFruit from "../../../assets/images/36.png";
 import { MdAccountCircle, MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { IoLeafOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -37,10 +40,14 @@ function Header() {
             className="btn btn-outline cart-trigger"
             type="button"
             onClick={() => dispatch({ type: "TOGGLE_CART", value: true })}
+            aria-haspopup="dialog"
+            aria-expanded={state.isCartOpen}
+            aria-controls="cart-drawer-title"
           >
             <MdOutlineShoppingCartCheckout />
             Cart
             <span className="cart-badge">{totalItems}</span>
+            <span className="visually-hidden">{totalItems} items in cart</span>
           </button>
           {state.user ? (
             <button
@@ -92,6 +99,24 @@ function Header() {
           <article>
             <h3>120+</h3>
             <p>Farm Partners</p>
+          </article>
+        </div>
+
+        <div className="hero-media" aria-hidden="true">
+          <img className="hero-image-main" src={heroMain} alt="" />
+          <article className="hero-media-card hero-media-card-top">
+            <img src={heroFresh} alt="" />
+            <div>
+              <p>Fresh Picks</p>
+              <strong>Picked today</strong>
+            </div>
+          </article>
+          <article className="hero-media-card hero-media-card-bottom">
+            <img src={heroFruit} alt="" />
+            <div>
+              <p>Top Rated Fruit</p>
+              <strong>4.9 Avg Rating</strong>
+            </div>
           </article>
         </div>
       </header>
