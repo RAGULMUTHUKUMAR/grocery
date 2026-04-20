@@ -7,7 +7,7 @@ import Footer from "../../features/layout/components/Footer";
 
 function HomePage() {
   return (
-    <div className="app-shell">
+    <div className="min-h-screen bg-white">
       <Header />
       <main>
         <ServiceHighlights />
